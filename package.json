@@ -1,0 +1,17 @@
+{
+  "name": "dinos",
+  "version": "1.0.0",
+  "author": "Paul Bokelman <paul.bokelman1@gmail.com>",
+  "description": "dino",
+  "license": "MIT",
+  "private": true,
+  "scripts": {},
+  "prisma": {
+    "schema": "./packages/server/src/prisma/schema.prisma"
+  },
+  "devDependencies": {
+    "chalk": "^4.1.2",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  }
+}

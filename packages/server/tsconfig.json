@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "outDir": "build",
+    "module": "commonjs",
+    "strict": false,
+    "target": "esnext",
+    "baseUrl": "./src",
+    "typeRoots": ["node_modules/@types"]
+  },
+
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    },
+    "esm": true
+  },
+
+  "include": ["src/"],
+  "exclude": ["node_modules"]
+}
