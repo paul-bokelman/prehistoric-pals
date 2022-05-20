@@ -17,7 +17,7 @@ export const uploadToken: UploadToken = async ({ id, image, meta }) => {
   const url = process.env.AWS_URL;
   const bucket = process.env.AWS_BUCKET;
 
-  const key = `${id}/${id}`;
+  const key = `dinos/${id}/${id}`;
   const imagePayload = {
     Bucket: bucket,
     Key: `${key}.png`,

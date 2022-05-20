@@ -1,6 +1,6 @@
 import { AssetCombination } from "./token.gen";
 
-type Metadata = {
+export type Metadata = {
   name: string;
   description: string;
   image: string;
@@ -20,21 +20,13 @@ type GenerateMetadata = ({
   combination: AssetCombination;
 }) => Promise<{ data: Metadata; buffer: Buffer }>;
 
-const metadata: Metadata = {
-  name: "", // bronto #12
-  description: "",
-  image: "", // url
-  attributes: [],
-  external_url: "",
-};
-
 export const generateMetadata: GenerateMetadata = async ({
   tokenId,
   combination,
 }) => {
   const url = process.env.AWS_URL;
   const key = `${tokenId}/${tokenId}`;
-  const imageURL = `${url}/${key}.png`;
+  const imageURL = `${url}/dinos/${key}.png`;
 
   const attributes = combination.reduce((result, { category, name }) => {
     if (name && category) {

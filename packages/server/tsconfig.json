@@ -3,12 +3,19 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
     "outDir": "build",
     "module": "commonjs",
     "strict": false,
     "target": "esnext",
     "baseUrl": "./src",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@/contracts": ["src/contracts/*"],
+      "@/typechain": ["src/contracts/typechain/*"],
+      "@/artifacts": ["src/contracts/artifacts"]
+    }
   },
 
   "ts-node": {
