@@ -1,24 +1,17 @@
 import type { NextPage } from "next";
-import { useEffect } from "react";
-import { useChainContext } from "context";
-
+import { useChainContext, useAuthContext } from "context";
 const Home: NextPage = () => {
-  const { signer, address, mint } = useChainContext();
-
-  useEffect(() => {
-    const test = async () => {
-      const add = await signer?.getAddress();
-      console.log(add);
-    };
-    test().catch(console.log);
-  }, [signer]);
+  const { signer, address, mint, connect } = useChainContext();
+  const { user } = useAuthContext();
 
   return (
     <div>
-      <button onClick={async () => await mint({ contractName: "dino" })}>
+      <button onClick={async () => connect()}>login w meta</button>
+      {/* <button onClick={async () => await mint({ contractName: "dino" })}>
         mint
-      </button>
+      </button> */}
       <h1>{address}</h1>
+      <p>{user && user.id}</p>
     </div>
   );
 };

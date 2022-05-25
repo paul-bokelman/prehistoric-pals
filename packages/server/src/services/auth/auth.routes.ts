@@ -1,10 +1,15 @@
 import express from "express";
-import * as controller from ".";
+import passport from "passport";
+import * as controller from "./controller";
 
 export const authRouter = express.Router();
 
-// authRouter.route("/:user/nonce").get(controller.nonce);
-// authRouter.route("/:user/signature").post(controller.signature);
-// authRouter.route("/:user/login").post(controller.login);
-// authRouter.route("/:user/logout").post(controller.logout);
-// authRouter.route("/:user/register").post(controller.register);
+authRouter.get("/:address/nonce", controller.getNonce);
+
+authRouter.post(
+  "/:address/signature",
+  // passport.authenticate("jwt", { session: false }),
+  controller.signNonce
+);
+
+// authRouter.route("/:user/logout").post(controller.logout); NEEDED

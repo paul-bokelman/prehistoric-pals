@@ -8,6 +8,16 @@ datasource db {
 }
 
 model User {
-  id    String @id @default(cuid())
-  nonce Int    @unique
+  id       String  @id @default(cuid())
+  sid      String?  @unique
+  address  String  @unique
+  nonce    String  @unique
+  username String? @unique
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
 }

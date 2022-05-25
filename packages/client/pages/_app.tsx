@@ -1,13 +1,30 @@
-import type { AppProps } from "next/app";
+import type { AppProps as NextAppProps } from "next/app";
+import type { AuthenticatedUser } from "lib/sdk";
+import App from "next/app";
 import "tailwindcss/tailwind.css";
-import { ChainProvider } from "context";
+import { ChainProvider, AuthProvider } from "context";
+import { getUser } from "lib/auth";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <ChainProvider>
-      <Component {...pageProps} />
-    </ChainProvider>
-  );
+interface AppProps extends NextAppProps {
+  user: AuthenticatedUser | null;
 }
 
-export default MyApp;
+const PrehistoricPals = ({ Component, pageProps, user }: AppProps) => {
+  console.log(user);
+  return (
+    <ChainProvider>
+      <AuthProvider sessionUser={user}>
+        <Component {...pageProps} />
+      </AuthProvider>
+    </ChainProvider>
+  );
+};
+
+PrehistoricPals.getInitialProps = async (app: any) => {
+  const appProps = await App.getInitialProps(app);
+  const cookies = app.ctx.req?.cookies;
+  const user = cookies ? await getUser({ cookies }) : null;
+  return { ...appProps, user };
+};
+
+export default PrehistoricPals;
