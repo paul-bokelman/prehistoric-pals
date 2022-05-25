@@ -2,7 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { generateToken } from "lib";
 import { initializeChain, mint as mintToken } from "lib/chain";
 
-export const generate = async (
+export const generateDino = async (
   req: Request,
   res: Response,
   next: NextFunction

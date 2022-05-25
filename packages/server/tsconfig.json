@@ -10,7 +10,6 @@
     "strict": false,
     "target": "esnext",
     "baseUrl": "./src",
-    "typeRoots": ["node_modules/@types"],
     "paths": {
       "@/contracts": ["src/contracts/*"],
       "@/typechain": ["src/contracts/typechain/*"],
@@ -22,9 +21,11 @@
     "compilerOptions": {
       "module": "commonjs"
     },
+    "files": true,
     "esm": true
   },
 
-  "include": ["src/"],
+  "files": ["./types/express.d.ts"],
+  "include": ["src/**/*", "types/*.d.ts"],
   "exclude": ["node_modules"]
 }
