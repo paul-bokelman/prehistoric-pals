@@ -1,6 +1,5 @@
 import * as ethUtil from "ethereumjs-util";
 import { prisma } from "config";
-import { generateNonce, retrieveMessage } from ".";
 
 type ValidateSignature = ({
   address,

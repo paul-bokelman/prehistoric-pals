@@ -1,13 +1,12 @@
 import axios from "axios";
-import { url, authHeaders } from ".";
-
-// type Error = { error: boolean; message?: string }; // this needs to be addressed
+import { url } from ".";
 
 export type AuthenticatedUser = {
   // this should be connected to User Schema
   id: string;
   address: string;
   nonce: string;
+  isAdmin: boolean;
   username: string;
 };
 
@@ -23,23 +22,19 @@ export interface UserSDK {
 
 const get: GetUser = async ({ token }) => {
   try {
-    const r = await axios.get<AuthenticatedUser>(url("/user"), {
+    const { data } = await axios.get<AuthenticatedUser>(url("/user"), {
       withCredentials: true,
       headers: {
         authorization: `Bearer ${token}`,
       },
     });
-    console.log(r);
-    return r.data;
+    return data;
   } catch (error) {
     console.log(error);
-
-    // throw error?
-    return null;
+    throw new Error("An error occurred fetching user");
   }
 };
 
 export const user: UserSDK = {
-  // should get token here?
   get,
 };

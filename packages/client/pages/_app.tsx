@@ -1,5 +1,5 @@
 import type { AppProps as NextAppProps } from "next/app";
-import type { AuthenticatedUser } from "lib/sdk";
+import type { AuthenticatedUser } from "lib/api";
 import App from "next/app";
 import "tailwindcss/tailwind.css";
 import { ChainProvider, AuthProvider } from "context";
@@ -12,11 +12,11 @@ interface AppProps extends NextAppProps {
 const PrehistoricPals = ({ Component, pageProps, user }: AppProps) => {
   console.log(user);
   return (
-    <ChainProvider>
-      <AuthProvider sessionUser={user}>
+    <AuthProvider sessionUser={user}>
+      <ChainProvider>
         <Component {...pageProps} />
-      </AuthProvider>
-    </ChainProvider>
+      </ChainProvider>
+    </AuthProvider>
   );
 };
 

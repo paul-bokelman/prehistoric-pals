@@ -1,8 +1,8 @@
-import React from "react";
+import type { NextPage } from "next";
 
 type Props = {};
 
-const Dashboard = (props: Props) => {
+const Dashboard: NextPage<Props> = (props: Props) => {
   return <div>test</div>;
 };
 

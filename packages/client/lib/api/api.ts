@@ -1,5 +1,5 @@
 import type { AxiosRequestHeaders } from "axios";
-import type { GetServerSidePropsContext, NextApiRequest } from "next";
+import type { NextApiRequest } from "next";
 import { dino, auth, user } from ".";
 
 export const url = (path: string) => {
@@ -27,4 +27,4 @@ export const validateCookie = ({
     : false;
 };
 
-export const ppals = { dino, auth, user };
+export const api = { dino, auth, user };

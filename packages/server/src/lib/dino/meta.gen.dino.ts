@@ -1,4 +1,4 @@
-import { AssetCombination } from "./token.gen";
+import { AssetCombination } from "./token.gen.dino";
 
 export type Metadata = {
   name: string;

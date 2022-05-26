@@ -66,5 +66,4 @@ export const initializeChain: InitializeChain = async () => {
       "Non-Ethereum browser detected. You should consider trying MetaMask"
     );
   }
-  // const provider = new ethers.providers.JsonRpcProvider();
 };

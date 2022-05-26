@@ -1,7 +1,7 @@
 import type { NextApiRequest } from "next";
-import { AuthenticatedUser, validateCookie } from "lib/sdk";
+import { AuthenticatedUser, validateCookie } from "lib/api";
 
-import { ppals } from "lib/sdk";
+import { api } from "lib/api";
 
 type GetUser = ({
   cookies,
@@ -14,7 +14,7 @@ export const getUser: GetUser = async ({ cookies }) => {
   if (!token) return null;
 
   try {
-    const user = await ppals.user.get({ token });
+    const user = await api.user.get({ token });
     if (!user) return null;
     return user;
   } catch (error) {

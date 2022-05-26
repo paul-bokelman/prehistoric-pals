@@ -1,17 +1,15 @@
 import type { FC, ReactNode } from "react";
-import type { AuthenticatedUser } from "lib/sdk";
+import type { AuthenticatedUser } from "lib/api";
 import { useReducer, createContext, useContext, useMemo } from "react";
-import Cookie from "js-cookie";
-import { ppals } from "lib/sdk";
 import {
   authReducer,
   AuthReducerActionTypes,
   AuthProviderState,
 } from "context/auth";
 
-// chain context needs to set user on connection from this provider
-
-interface AuthContext extends AuthProviderState {}
+interface AuthContext extends AuthProviderState {
+  setUser: (user: AuthProviderState["user"]) => Promise<void>;
+}
 
 const AuthContext = createContext<AuthContext | undefined>(undefined);
 
@@ -27,17 +25,22 @@ export const AuthProvider: FC<{
   sessionUser: AuthenticatedUser | null;
   children: ReactNode;
 }> = ({ sessionUser, children }) => {
-  const [{ user }, dispatch] = useReducer(authReducer, {
+  const [{ user, loggedIn }, dispatch] = useReducer(authReducer, {
     user: sessionUser,
+    loggedIn: !!sessionUser,
   });
 
-  //   dispatch({type: AuthReducerActionTypes.setUser, payload: USER});
+  const setUser: AuthContext["setUser"] = async (user) => {
+    dispatch({ type: AuthReducerActionTypes.setUser, payload: user });
+  };
 
   const value = useMemo(
     () => ({
       user,
+      loggedIn,
+      setUser,
     }),
-    [user]
+    [user, loggedIn, setUser]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

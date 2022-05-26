@@ -51,6 +51,7 @@ export const signNonce = async (
 
     return res.status(200).json({
       success: true,
+      token: token,
     });
   } catch (error) {
     console.log(error);

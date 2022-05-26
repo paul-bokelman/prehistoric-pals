@@ -1,8 +1,7 @@
-import type { Metadata } from "lib";
 import { initializeChain } from "lib/chain";
 
 type GetTokenArgs = { id: number; contract: "dino" | "scenery" };
-type GetTokenPayload = string; // Metadata is fetched
+type GetTokenPayload = string | null;
 type GetToken = ({ id, contract }: GetTokenArgs) => Promise<GetTokenPayload>;
 
 export const getToken: GetToken = async ({ id, contract }) => {
@@ -12,6 +11,7 @@ export const getToken: GetToken = async ({ id, contract }) => {
     const uri = await contractInstance.tokenURI(id);
     return uri;
   } catch (error) {
-    throw new Error(error.message || error);
+    console.log(error);
+    return null;
   }
 };

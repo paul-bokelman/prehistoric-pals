@@ -1,7 +1,8 @@
 import type Jimp from "jimp";
 import fs from "fs";
 import jimp from "jimp";
-import { randomHex, uploadToken, replaceColors } from "lib/utils";
+import { uploadToken } from "lib/bucket";
+import { randomHex, replaceColors } from "lib/utils";
 import { generateMetadata, attributes, colors } from ".";
 
 type GetAssetPath = ({

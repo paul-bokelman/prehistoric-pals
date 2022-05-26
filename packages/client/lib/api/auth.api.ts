@@ -1,18 +1,12 @@
 import axios from "axios";
 import { url } from ".";
 
-type Error = { error: boolean; message?: string };
-
 type GetNoncePayload = {
   address: string;
   nonce: string;
   signMessage: string;
 };
-type GetNonce = ({
-  address,
-}: {
-  address: string;
-}) => Promise<Partial<GetNoncePayload> & Error>;
+type GetNonce = ({ address }: { address: string }) => Promise<GetNoncePayload>;
 
 type SignPayload = {
   success: boolean;
@@ -24,7 +18,7 @@ type Sign = ({
 }: {
   address: string;
   signature: string;
-}) => Promise<Partial<SignPayload> & Error>;
+}) => Promise<SignPayload>;
 
 export interface AuthSDK {
   nonce: GetNonce;
@@ -37,10 +31,10 @@ const nonce: GetNonce = async ({ address }) => {
       url(`/auth/${address}/nonce`),
       { withCredentials: true }
     );
-    return { error: false, ...data };
+    return data;
   } catch (error: any) {
     console.log(error);
-    return { error: true, message: error.message };
+    throw new Error("An error occurred fetching/generating nonce");
   }
 };
 
@@ -51,11 +45,10 @@ const sign: Sign = async ({ address, signature }) => {
       { signature },
       { withCredentials: true }
     );
-    console.log(data);
-    return { error: false, ...data };
+    return data;
   } catch (error: any) {
     console.log(error);
-    return { error: true, message: error.message };
+    throw new Error("An error occurred signing");
   }
 };
 

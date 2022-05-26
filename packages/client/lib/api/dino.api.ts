@@ -1,20 +1,14 @@
 import axios from "axios";
 import { url } from ".";
 
-import { Metadata } from "../../../server/src/lib/"; // path alias please, this should also come from route as payload type
-
-type Error = { error: boolean; message?: string };
+import { Metadata } from "../../../server/src/lib"; // path alias please, this should also come from route as payload type
 
 type GenerateDinoPayload = {
   tokenId: number;
   uri: string;
 };
-type GenerateDino = () => Promise<Partial<GenerateDinoPayload> & Error>;
-type GetDino = ({
-  tokenId,
-}: {
-  tokenId: number;
-}) => Promise<Partial<Metadata> & Error>;
+type GenerateDino = () => Promise<GenerateDinoPayload>;
+type GetDino = ({ tokenId }: { tokenId: number }) => Promise<Metadata>;
 
 export interface DinoSDK {
   get: GetDino;
@@ -26,20 +20,20 @@ const generate: GenerateDino = async () => {
     const { data } = await axios.get<GenerateDinoPayload>(
       url("/dino/generate")
     );
-    return { error: false, ...data };
+    return data;
   } catch (error: any) {
     console.log(error);
-    return { error: true, message: error.message };
+    throw new Error("An error occurred generating dino");
   }
 };
 
 const get: GetDino = async ({ tokenId }) => {
   try {
     const { data } = await axios.get<Metadata>(url(`/dino/${tokenId}`));
-    return { error: false, ...data };
+    return data;
   } catch (error: any) {
     console.log(error);
-    return { error: true, message: error.message };
+    throw new Error("An error occurred fetching dino");
   }
 };
 
