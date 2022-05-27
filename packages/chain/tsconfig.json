@@ -7,6 +7,13 @@
     "outDir": "dist",
     "declaration": true
   },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "commonjs"
+    },
+    "files": true,
+    "esm": true
+  },
   "include": ["./scripts", "__tests__", "./typechain"],
   "files": ["./hardhat.config.ts"]
 }
