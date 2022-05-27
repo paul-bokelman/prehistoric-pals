@@ -13,11 +13,7 @@ import { useAuthContext } from "context/auth";
 interface ChainContext extends ChainProviderState {
   connect: () => Promise<void>;
   connectWithSession: () => Promise<void>;
-  mint: ({
-    contractName,
-  }: {
-    contractName: "dino" | "scenery";
-  }) => Promise<SafeMintPayload>;
+  mint: () => Promise<SafeMintPayload>;
 }
 
 const ChainContext = createContext<ChainContext | undefined>(undefined);
@@ -33,19 +29,18 @@ export const useChainContext = (): ChainContext => {
 
 export const ChainProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { setUser } = useAuthContext();
-  const [{ provider, contracts, signer, address }, dispatch] = useReducer(
+  const [{ provider, contract, signer, address }, dispatch] = useReducer(
     chainReducer,
     {
       provider: null,
-      contracts: { dino: null, scenery: null },
+      contract: null,
       signer: null,
       address: null,
     }
   );
 
-  const mint: ChainContext["mint"] = async ({ contractName }) => {
-    const contract = contracts[contractName];
-    if (!contract) throw new Error(`Contract ${contractName} not found`);
+  const mint: ChainContext["mint"] = async () => {
+    if (!contract) throw new Error(`Contract not found`);
     if (!signer) throw new Error("Signer not found or null");
 
     try {
@@ -54,7 +49,7 @@ export const ChainProvider: FC<{ children: ReactNode }> = ({ children }) => {
       const safeMintResponse = await safeMint({ tokenId, contract, signer });
       if (!safeMintResponse) throw new Error("Mint error");
       const { id, uri } = safeMintResponse;
-      console.log(`Minted ${contractName} with id ${id} and uri ${uri}`);
+      console.log(`Minted Dino with id ${id} and uri ${uri}`);
       return { id, uri } as SafeMintPayload;
     } catch (e) {
       console.error(e);
@@ -63,14 +58,14 @@ export const ChainProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const connect = async () => {
     try {
-      const { provider, signer, address, contracts } = await initializeChain();
+      const { provider, signer, address, contract } = await initializeChain();
       dispatch({
         type: ChainReducerActionTypes.setProvider,
         payload: provider,
       });
       dispatch({
-        type: ChainReducerActionTypes.setContracts,
-        payload: contracts,
+        type: ChainReducerActionTypes.setContract,
+        payload: contract,
       });
       dispatch({ type: ChainReducerActionTypes.setAddress, payload: address });
       dispatch({ type: ChainReducerActionTypes.setSigner, payload: signer });
@@ -96,14 +91,14 @@ export const ChainProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const connectWithSession = async (): Promise<void> => {
     try {
-      const { provider, signer, address, contracts } = await initializeChain();
+      const { provider, signer, address, contract } = await initializeChain();
       dispatch({
         type: ChainReducerActionTypes.setProvider,
         payload: provider,
       });
       dispatch({
-        type: ChainReducerActionTypes.setContracts,
-        payload: contracts,
+        type: ChainReducerActionTypes.setContract,
+        payload: contract,
       });
       dispatch({ type: ChainReducerActionTypes.setAddress, payload: address });
       dispatch({ type: ChainReducerActionTypes.setSigner, payload: signer });
@@ -115,14 +110,14 @@ export const ChainProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const value = useMemo(
     () => ({
       provider,
-      contracts,
+      contract,
       signer,
       address,
       connect,
       connectWithSession,
       mint,
     }),
-    [provider, contracts, signer, address, mint, connect, connectWithSession]
+    [provider, contract, signer, address, mint, connect, connectWithSession]
   );
 
   return (

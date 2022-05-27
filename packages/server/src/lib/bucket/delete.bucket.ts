@@ -1,19 +1,13 @@
 import { s3 } from "config";
 
-type DeleteToken = ({
-  id,
-  contract,
-}: {
-  id: number;
-  contract: "dino" | "scenery";
-}) => Promise<void>;
+type DeleteToken = ({ id }: { id: number }) => Promise<void>;
 
 // different contract options
 
-export const deleteToken: DeleteToken = async ({ id, contract }) => {
+export const deleteToken: DeleteToken = async ({ id }) => {
   const bucket = process.env.AWS_BUCKET;
 
-  const key = `${contract}/${id}/${id}`;
+  const key = `dinos/${id}/${id}`;
 
   const keys = {
     image: `${key}.png`,

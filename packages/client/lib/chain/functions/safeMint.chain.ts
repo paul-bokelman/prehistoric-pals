@@ -1,11 +1,11 @@
-import type { Dino, Scenery } from "contracts/typechain";
+import type { Dino } from "contracts/typechain";
 import type { providers } from "ethers";
 import { ethers } from "ethers";
 
 type SafeMintArgs = {
   tokenId: number;
   signer: providers.JsonRpcSigner;
-  contract: Dino | Scenery;
+  contract: Dino;
 };
 export type SafeMintPayload = { id: number; uri: string } | undefined;
 type SafeMint = ({
@@ -29,10 +29,7 @@ export const safeMint: SafeMint = async ({ tokenId, signer, contract }) => {
 
     const signerAddress = await signer.getAddress();
     const contractInstance = contract.connect(signer);
-    const value = ethers.utils.parseEther(
-      // (await contract.name()) === "Dino" ? "15" : "10"
-      "15"
-    );
+    const value = ethers.utils.parseEther("15");
     const tx = await contractInstance.safeMint(
       signerAddress,
       `${tokenId}/${tokenId}`,

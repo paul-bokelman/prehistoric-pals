@@ -1,21 +1,15 @@
 import type { providers } from "ethers";
-import type {
-  Dino as DinoContract,
-  Scenery as SceneryContract,
-} from "contracts/typechain";
+import type { Dino as DinoContract } from "contracts/typechain";
 import { Reducer } from "react";
 
-type Contracts = {
-  dino: DinoContract | null;
-  scenery: SceneryContract | null;
-};
+type Contract = DinoContract | null;
 
 type Signer = providers.JsonRpcSigner;
 
 export enum ChainReducerActionTypes {
   setProvider = "setProvider",
   setSigner = "setSigner",
-  setContracts = "setContracts",
+  setContract = "setContract",
   setAddress = "setAddress",
 }
 
@@ -33,13 +27,13 @@ export type ChainReducerAction =
       payload: ChainProviderState["signer"];
     }
   | {
-      type: ChainReducerActionTypes.setContracts;
-      payload: ChainProviderState["contracts"];
+      type: ChainReducerActionTypes.setContract;
+      payload: ChainProviderState["contract"];
     };
 
 export interface ChainProviderState {
   provider: providers.Web3Provider | null;
-  contracts: Contracts;
+  contract: Contract;
   signer: Signer | null;
   address: string | null;
 }
@@ -57,8 +51,8 @@ export const chainReducer: Reducer<ChainProviderState, ChainReducerAction> = (
       return { ...state, address: action.payload };
     case ChainReducerActionTypes.setSigner:
       return { ...state, signer: action.payload };
-    case ChainReducerActionTypes.setContracts:
-      return { ...state, contracts: action.payload };
+    case ChainReducerActionTypes.setContract:
+      return { ...state, contract: action.payload };
     default:
       throw new Error(`Unhandled action type`);
   }

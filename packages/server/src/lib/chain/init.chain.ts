@@ -1,10 +1,6 @@
 import { ethers } from "ethers";
-import type {
-  Dino as DinoContract,
-  Scenery as SceneryContract,
-} from "contracts/typechain";
+import type { Dino as DinoContract } from "contracts/typechain";
 import Dino from "contracts/artifacts/contracts/Dino.sol/Dino.json";
-import Scenery from "contracts/artifacts/contracts/Scenery.sol/Scenery.json";
 
 declare global {
   interface Window {
@@ -15,10 +11,7 @@ declare global {
 type InitializeChainPayload = {
   provider: ethers.providers.JsonRpcProvider;
   owner: ethers.Signer;
-  contracts: {
-    dino: DinoContract;
-    scenery: SceneryContract;
-  };
+  contract: DinoContract;
 };
 type InitializeChain = () => Promise<InitializeChainPayload>;
 
@@ -32,17 +25,11 @@ export const initializeChain: InitializeChain = async () => {
     "0x70997970c51812dc3a010c7d01b50e0d17dc79c8"
   );
 
-  const dino = new ethers.Contract(
+  const contract = new ethers.Contract(
     process.env.DINO_CONTRACT_ADDRESS || "",
     Dino.abi,
     owner
   ) as DinoContract;
 
-  const scenery = new ethers.Contract(
-    process.env.SCENERY_CONTRACT_ADDRESS || "",
-    Scenery.abi,
-    owner
-  ) as SceneryContract;
-
-  return { provider, owner, contracts: { dino, scenery } };
+  return { provider, owner, contract };
 };

@@ -4,7 +4,9 @@ import { useRouter } from "next/router";
 type Props = {};
 
 const Address: NextPage<Props> = (props: Props) => {
-  return <div>[address]</div>;
+  const router = useRouter();
+  const { address } = router.query;
+  return <div>address</div>;
 };
 
 export default Address;

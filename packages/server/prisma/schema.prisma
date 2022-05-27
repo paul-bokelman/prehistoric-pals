@@ -22,18 +22,3 @@ model Dino {
   meta    String @unique
   owner   String @unique
 }
-
-model Scenery {
-  id      String @id @default(cuid())
-  tokenId Int    @unique
-  image   String @unique
-  meta    String @unique
-  owner   String @unique
-}
-
-// model Session {
-//   id        String   @id
-//   sid       String   @unique
-//   data      String
-//   expiresAt DateTime
-// }
