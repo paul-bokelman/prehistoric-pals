@@ -1,5 +1,5 @@
 import type { NextApiRequest } from "next";
-import { AuthenticatedUser, validateCookie } from "lib/api";
+import { AuthenticatedUser } from "lib/api";
 
 import { api } from "lib/api";
 

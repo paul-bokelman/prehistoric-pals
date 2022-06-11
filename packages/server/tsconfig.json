@@ -9,12 +9,7 @@
     "module": "commonjs",
     "strict": false,
     "target": "esnext",
-    "baseUrl": "./src",
-    "paths": {
-      "@/contracts": ["src/contracts/*"],
-      "@/typechain": ["src/contracts/typechain/*"],
-      "@/artifacts": ["src/contracts/artifacts"]
-    }
+    "baseUrl": "./src"
   },
 
   "ts-node": {

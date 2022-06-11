@@ -4,6 +4,14 @@ import passport from "passport";
 import { Strategy, ExtractJwt } from "passport-jwt";
 import { prisma } from "config";
 import { verify } from "jsonwebtoken";
+import dotenv from "dotenv";
+import { env } from "lib/env";
+
+dotenv.config({
+  // env is enabled globally in app.ts why the fuck do I need it here?? Could be due to require statement in app.ts??
+  path: ".env.development",
+  debug: true,
+});
 
 passport.serializeUser((user, done) => {
   done(null, user);
@@ -24,7 +32,7 @@ passport.deserializeUser(async ({ id }: PrismaUser, done) => {
 
 const opts = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-  secretOrKey: process.env.JWT_SECRET,
+  secretOrKey: env("JWT_SECRET"),
 };
 
 passport.use(
@@ -55,7 +63,7 @@ export const isAuthenticated = (
     });
 
   try {
-    verify(token, process.env.JWT_SECRET, {}, (err) => {
+    verify(token, env("JWT_SECRET"), {}, (err) => {
       if (err) return res.status(401).json({ error: err.message });
       next();
     });
@@ -78,7 +86,7 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction) => {
   try {
     verify(
       token,
-      process.env.JWT_SECRET,
+      env("JWT_SECRET"),
       {},
       async (err, payload: { id: string; address: string }) => {
         if (err) return res.status(401).json({ error: err.message });

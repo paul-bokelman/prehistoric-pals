@@ -3,7 +3,7 @@ import { customAlphabet } from "nanoid";
 type GenerateNonce = () => { nonce: string; message: string };
 type RetrieveNonce = (nonce: string) => string;
 
-const msg = "Your nonce"; // shitty message tbh
+const msg = "Your nonce"; // shitty message tbh but yk damn well i'll never see this again
 const alphabet =
   "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

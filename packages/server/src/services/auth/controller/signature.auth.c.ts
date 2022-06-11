@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express";
 import { sign } from "jsonwebtoken";
 import { prisma } from "config";
 import { generateNonce, validateSignature } from "lib/auth/utils";
+import { env } from "lib/env";
 
 export const signNonce = async (
   req: Request,
@@ -34,7 +35,7 @@ export const signNonce = async (
         id: user.id,
         address: user.address,
       },
-      process.env.JWT_SECRET,
+      env("JWT_SECRET"),
       {
         expiresIn: "24h",
       }

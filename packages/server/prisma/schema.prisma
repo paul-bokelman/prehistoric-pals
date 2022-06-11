@@ -15,10 +15,83 @@ model User {
   isAdmin  Boolean @default(true) // CHANGE THIS
 }
 
-model Dino {
-  id      String @id @default(cuid())
-  tokenId Int    @unique
-  image   String @unique
-  meta    String @unique
-  owner   String @unique
-}
+// PREVIOUS MODELS FOR REFERENCE
+
+// model User {
+//   id            String       @id @default(cuid())
+//   nonce         Int          @unique
+//   address       String       @unique
+//   email         String       @unique
+//   username      String       @unique
+//   discordId     String       @unique
+//   firstName     String?
+//   lastName      String?
+//   rank          Int          @default(0)
+//   active        Boolean      @default(false)
+//   application   Application? @relation(fields: [applicationId], references: [id])
+//   applicationId String?      @unique
+//   assets        Asset[]
+// }
+
+// model Application {
+//   id                 String            @id @default(cuid())
+//   usid               String            @unique
+//   status             ApplicationStatus @default(pending)
+//   discord_username   String            @unique
+//   twitter            String
+//   game_interests     String[]
+//   active_discords    String[]
+//   game_nfts          String[]
+//   hours              String
+//   playstyle          String
+//   why_join           String            @db.Text
+//   looking_for        String            @db.Text
+//   previous_rentals   String[]
+//   unsung_rentals     String[]
+//   raiders_before_p2e String
+//   location           String
+//   additional_info    String?           @db.Text
+//   created_at         DateTime          @default(now())
+//   updated_at         DateTime          @default(now())
+//   user               User?
+// }
+
+// model Asset {
+//   id         String      @id @default(cuid())
+//   name       String
+//   image      String
+//   wallet     String
+//   chain      AssetChain
+//   tokenId    String
+//   contract   String
+//   game       AssetGames
+//   status     AssetStatus @default(available)
+//   created_at DateTime    @default(now())
+//   updated_at DateTime    @default(now())
+//   owner      User?       @relation(fields: [ownerId], references: [id])
+//   ownerId    String?     @unique
+// }
+
+// enum ApplicationStatus {
+//   pending
+//   approved
+//   denied
+// }
+
+// enum AssetStatus {
+//   available
+//   unavailable
+//   pending
+// }
+
+// enum AssetGames {
+//   sipher
+//   cryptoraiders
+//   galaxyfightclub
+//   voxies
+// }
+
+// enum AssetChain {
+//   ethereum
+//   polygon
+// }

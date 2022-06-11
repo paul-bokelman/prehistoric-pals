@@ -1,1 +1,1 @@
-export * from "./dino";
+export * from "./env";
